@@ -20,7 +20,7 @@ type ChannelProps = {
         location_long: string;
         moods: [];
         genres: [];
-        media: [background_medium: string];
+        [x: string]: any; // TODO: remove when we've decided what to use
       };
     };
   };

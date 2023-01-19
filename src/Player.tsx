@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import AudioPlayer from "react-h5-audio-player";
+// import { useEffect, useState } from "react";
+import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
 type PlayerProps = { src: string };
@@ -18,7 +18,7 @@ export default function Player({ src }: PlayerProps) {
       //   showJumpControls={false}
       //   layout="stacked"
       customProgressBarSection={[]}
-      customControlsSection={["MAIN_CONTROLS"]}
+      customControlsSection={[RHAP_UI.MAIN_CONTROLS]}
       //   autoPlayAfterSrcChange={false}
     />
   );

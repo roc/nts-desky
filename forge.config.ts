@@ -12,6 +12,7 @@ const config: ForgeConfig = {
   packagerConfig: {
     // see https://www.electronforge.io/config/plugins/auto-unpack-natives
     asar: true, // or an object containing your asar options
+    icon: "/images/icon",
   },
   rebuildConfig: {},
   makers: [
@@ -38,12 +39,12 @@ const config: ForgeConfig = {
         ],
       },
     }),
-    {
-      name: "@electron-forge/plugin-electronegativity",
-      config: {
-        isSarif: true,
-      },
-    },
+    // {
+    //   name: "@electron-forge/plugin-electronegativity",
+    //   config: {
+    //     isSarif: true,
+    //   },
+    // },
     {
       name: "@electron-forge/plugin-auto-unpack-natives",
       config: {},
