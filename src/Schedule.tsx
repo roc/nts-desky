@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Player from "./Player";
 import axios from "axios";
 
 interface ServerData {
@@ -11,37 +12,45 @@ type ChannelProps = {
   title: string;
   now: {
     broadcast_title: string;
-    //   TODO: embed Interface
+    // TODO: embed/details Interface
     embeds: {
       details: {
         status: string;
         description: string;
+        location_long: string;
+        moods: [];
+        genres: [];
+        media: [background_medium: string];
       };
-      moods: [];
-      genres: [];
     };
   };
   [x: string]: any; // mop up for ...props
 };
 
 const Channel = ({ title, now }: ChannelProps) => {
-  console.log(title, now);
+  console.log(title, now, typeof title);
   const { broadcast_title: name } = now;
   const { embeds } = now;
-  const { details, moods, genres } = embeds;
+  const { details } = embeds;
+  const { description, media, location_long: locationLong } = details;
   return (
     <div key={title}>
       <h1>
-        {title}
-        {renderHTML(name)}
+        {title}: {renderHTML(name)} ({locationLong})
       </h1>
-      <p>{details.description}</p>
+      <img src={media.background_medium} />
+      <Player
+        src={`https://stream-relay-geo.ntslive.net/stream${
+          title === "2" ? 2 : ""
+        }?client=NTSWebApp`}
+      />
+      <p>{description}</p>
     </div>
   );
 };
 
 const renderHTML = (rawHTML: string) =>
-  React.createElement("div", { dangerouslySetInnerHTML: { __html: rawHTML } });
+  React.createElement("span", { dangerouslySetInnerHTML: { __html: rawHTML } });
 
 export default function Schedule() {
   const [error, setError] = useState(null);
