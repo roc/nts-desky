@@ -52,7 +52,7 @@ const Channel = ({ title, now }: ChannelProps) => {
 const renderHTML = (rawHTML: string) =>
   React.createElement("span", { dangerouslySetInnerHTML: { __html: rawHTML } });
 
-export default function Schedule() {
+const Schedule: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
@@ -105,4 +105,6 @@ export default function Schedule() {
       </ul>
     );
   }
-}
+};
+
+export default Schedule;

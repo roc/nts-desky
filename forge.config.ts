@@ -12,7 +12,7 @@ const config: ForgeConfig = {
   packagerConfig: {
     // see https://www.electronforge.io/config/plugins/auto-unpack-natives
     asar: true, // or an object containing your asar options
-    icon: "/images/icon",
+    icon: "./images/icon",
   },
   rebuildConfig: {},
   makers: [
