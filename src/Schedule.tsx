@@ -27,6 +27,8 @@ type ChannelProps = {
   [x: string]: any; // mop up for ...props
 };
 
+const REFRESH_PERIOD_MS = 60000;
+
 const Channel = ({ title, now }: ChannelProps) => {
   console.log(title, now, typeof title);
   const { broadcast_title: name } = now;
@@ -56,13 +58,9 @@ const Schedule: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
-
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
-  useEffect(() => {
-    const refresh = () => {
-      axios
+  let timeoutId;
+  const refresh = () => {
+      return axios
         .request<ServerData>({
           url: `https://www.nts.live/api/v2/live`,
         })
@@ -74,7 +72,6 @@ const Schedule: React.FC = () => {
 
             setIsLoaded(true);
             setItems(data.results);
-            timeoutId = window.setTimeout(refresh, 60000);
           },
           // Note: it's important to handle errors here
           // instead of a catch() block so that we don't swallow
@@ -83,11 +80,22 @@ const Schedule: React.FC = () => {
             setIsLoaded(true);
             setError(error);
             console.log(error);
-            timeoutId = window.setTimeout(refresh, 60000);
           }
-        );
+        )
+        .finally(() => {
+          timeoutId = window.setTimeout(refresh, REFRESH_PERIOD_MS);
+        });
     };
-    let timeoutId;
+  // Note: the empty deps array [] means
+  // this useEffect will run once
+  // similar to componentDidMount()
+  useEffect(() => {
+    document.addEventListener('visibilitychange', () => {
+      window.clearTimeout(timeoutId);
+      if (document.visibilityState === 'hidden') return;
+
+      refresh();
+    });
     refresh();
     return () => window.clearTimeout(timeoutId);
   }, []);
