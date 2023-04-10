@@ -61,28 +61,35 @@ const Schedule: React.FC = () => {
   // this useEffect will run once
   // similar to componentDidMount()
   useEffect(() => {
-    axios
-      .request<ServerData>({
-        url: `https://www.nts.live/api/v2/live`,
-      })
-      .then(
-        (response) => {
-          console.log(response);
-          // `response` is of type `AxiosResponse<ServerData>`
-          const { data } = response; // `data` is of type ServerData, correctly inferred
+    const refresh = () => {
+      axios
+        .request<ServerData>({
+          url: `https://www.nts.live/api/v2/live`,
+        })
+        .then(
+          (response) => {
+            console.log(response);
+            // `response` is of type `AxiosResponse<ServerData>`
+            const { data } = response; // `data` is of type ServerData, correctly inferred
 
-          setIsLoaded(true);
-          setItems(data.results);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-          console.log(error);
-        }
-      );
+            setIsLoaded(true);
+            setItems(data.results);
+            timeoutId = window.setTimeout(refresh, 60000);
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+            console.log(error);
+            timeoutId = window.setTimeout(refresh, 60000);
+          }
+        );
+    };
+    let timeoutId;
+    refresh();
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   if (error) {
