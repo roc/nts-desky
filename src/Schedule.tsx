@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Player from "./Player";
 import axios from "axios";
 
+import DialKnob from "./DialKnob";
+
 interface ServerData {
   foo: string;
   bar: number;
@@ -24,11 +26,12 @@ type ChannelProps = {
       };
     };
   };
+  volume: number;
   [x: string]: any; // mop up for ...props
 };
 
-const Channel = ({ title, now }: ChannelProps) => {
-  console.log(title, now, typeof title);
+const Channel = ({ title, now, volume }: ChannelProps) => {
+  // console.log(title, now, typeof title);
   const { broadcast_title: name } = now;
   const { embeds } = now;
   const { details } = embeds;
@@ -43,6 +46,7 @@ const Channel = ({ title, now }: ChannelProps) => {
         src={`https://stream-relay-geo.ntslive.net/stream${
           title === "2" ? 2 : ""
         }?client=NTSWebApp`}
+        volume={volume}
       />
       <p>{description}</p>
     </div>
@@ -56,6 +60,7 @@ const Schedule: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  const [playerVolume, setVolume] = useState(100);
 
   // Note: the empty deps array [] means
   // this useEffect will run once
@@ -91,18 +96,23 @@ const Schedule: React.FC = () => {
     return <div>Loading...</div>;
   } else {
     return (
-      <ul>
-        {items.map((channel: any) => {
-          const { channel_name: channelTitle } = channel;
-          return (
-            <Channel
-              title={channelTitle}
-              now={channel.now}
-              key={channelTitle}
-            />
-          );
-        })}
-      </ul>
+      <div>
+        <DialKnob volume={playerVolume} callback={setVolume} />
+
+        <ul>
+          {items.map((channel: any) => {
+            const { channel_name: channelTitle } = channel;
+            return (
+              <Channel
+                title={channelTitle}
+                now={channel.now}
+                key={channelTitle}
+                volume={playerVolume}
+              />
+            );
+          })}
+        </ul>
+      </div>
     );
   }
 };
