@@ -2,13 +2,18 @@
 import AudioPlayer, { RHAP_UI } from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 
-type PlayerProps = { src: string };
+type PlayerProps = { src: string, volume: number };
 
-export default function Player({ src }: PlayerProps) {
+export default function Player({ src, volume }: PlayerProps) {
+  const volumeDecimal = volume / 100
+
+  console.log(volumeDecimal)
+
   return (
     <AudioPlayer
       className="player"
       src={src}
+      volume={volumeDecimal}
       //   autoPlay
       onPlay={(e) => console.log(e, "onPlay")}
       showJumpControls={false}
