@@ -27,6 +27,8 @@ type ChannelProps = {
   [x: string]: any; // mop up for ...props
 };
 
+const REFRESH_PERIOD_MS = 60000;
+
 const Channel = ({ title, now }: ChannelProps) => {
   console.log(title, now, typeof title);
   const { broadcast_title: name } = now;
@@ -56,33 +58,46 @@ const Schedule: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  let timeoutId;
+  const refresh = () => {
+      return axios
+        .request<ServerData>({
+          url: `https://www.nts.live/api/v2/live`,
+        })
+        .then(
+          (response) => {
+            console.log(response);
+            // `response` is of type `AxiosResponse<ServerData>`
+            const { data } = response; // `data` is of type ServerData, correctly inferred
 
+            setIsLoaded(true);
+            setItems(data.results);
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+            console.log(error);
+          }
+        )
+        .finally(() => {
+          timeoutId = window.setTimeout(refresh, REFRESH_PERIOD_MS);
+        });
+    };
   // Note: the empty deps array [] means
   // this useEffect will run once
   // similar to componentDidMount()
   useEffect(() => {
-    axios
-      .request<ServerData>({
-        url: `https://www.nts.live/api/v2/live`,
-      })
-      .then(
-        (response) => {
-          console.log(response);
-          // `response` is of type `AxiosResponse<ServerData>`
-          const { data } = response; // `data` is of type ServerData, correctly inferred
+    document.addEventListener('visibilitychange', () => {
+      window.clearTimeout(timeoutId);
+      if (document.visibilityState === 'hidden') return;
 
-          setIsLoaded(true);
-          setItems(data.results);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-          console.log(error);
-        }
-      );
+      refresh();
+    });
+    refresh();
+    return () => window.clearTimeout(timeoutId);
   }, []);
 
   if (error) {
