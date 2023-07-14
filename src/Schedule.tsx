@@ -36,7 +36,7 @@ const Channel = ({ title, now }: ChannelProps) => {
   return (
     <div key={title}>
       <h1>
-        {title}: {renderHTML(name)} ({locationLong})
+        {title}: {renderHTML(name)} {locationLong ? `(${locationLong})` : null}
       </h1>
       <img src={media.background_medium} />
       <Player
