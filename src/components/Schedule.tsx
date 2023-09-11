@@ -9,6 +9,21 @@ interface ServerData {
   results: [];
 }
 
+export type Now = {
+  broadcast_title: string;
+  // TODO: embed/details Interface
+  embeds: {
+    details: {
+      status: string;
+      description: string;
+      location_long: string;
+      moods: [];
+      genres: [];
+      [x: string]: any; // TODO: remove when we've decided what to use
+    };
+  };
+};
+
 const Schedule: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -50,15 +65,16 @@ const Schedule: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  const handlePlaying = (title: string) => {
+  const handlePlaying = (title: string, now: Now) => {
     console.log(title, "title");
-    setPlaying(title);
+    setPlaying({ title, now });
   };
 
   return (
     <>
       <ul>
         {items.map((channel: any) => {
+          console.log("actual channel info", channel);
           const { channel_name: channelTitle } = channel;
           return (
             <Channel
@@ -71,7 +87,7 @@ const Schedule: React.FC = () => {
           );
         })}
       </ul>
-      <NowPlaying channel={playing && playing.title} />
+      {playing && <NowPlaying channel={playing.title} details={playing.now} />}
     </>
   );
 };

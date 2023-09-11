@@ -1,21 +1,7 @@
 import React from "react";
 import PlayControl from "./PlayControl";
+import type { Now } from "./Schedule";
 PlayControl;
-
-export type Now = {
-  broadcast_title: string;
-  // TODO: embed/details Interface
-  embeds: {
-    details: {
-      status: string;
-      description: string;
-      location_long: string;
-      moods: [];
-      genres: [];
-      [x: string]: any; // TODO: remove when we've decided what to use
-    };
-  };
-};
 
 const renderHTML = (rawHTML: string) =>
   React.createElement("span", { dangerouslySetInnerHTML: { __html: rawHTML } });
@@ -29,7 +15,7 @@ const Channel = ({
   title: string;
   now: Now;
   isPlaying: boolean;
-  handlePlaying: (id: string) => void;
+  handlePlaying: (id: string, now: Now) => void;
 }) => {
   console.log(title, now, typeof title);
   const { broadcast_title: name } = now;
@@ -45,7 +31,7 @@ const Channel = ({
       <img src={media.background_medium} />
       <PlayControl
         id={title}
-        onPress={() => handlePlaying(title)}
+        onPress={() => handlePlaying(title, now)}
         isPlaying={isPlaying}
       />
       {/* <Player
