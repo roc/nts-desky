@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import Player from "./Player";
 import axios from "axios";
+import NowPlaying from "./NowPlaying";
+import Channel from "./Channel";
 
 interface ServerData {
   foo: string;
@@ -8,54 +9,11 @@ interface ServerData {
   results: [];
 }
 
-type ChannelProps = {
-  title: string;
-  now: {
-    broadcast_title: string;
-    // TODO: embed/details Interface
-    embeds: {
-      details: {
-        status: string;
-        description: string;
-        location_long: string;
-        moods: [];
-        genres: [];
-        [x: string]: any; // TODO: remove when we've decided what to use
-      };
-    };
-  };
-  [x: string]: any; // mop up for ...props
-};
-
-const Channel = ({ title, now }: ChannelProps) => {
-  console.log(title, now, typeof title);
-  const { broadcast_title: name } = now;
-  const { embeds } = now;
-  const { details } = embeds;
-  const { description, media, location_long: locationLong } = details;
-  return (
-    <div key={title}>
-      <h1>
-        {title}: {renderHTML(name)} {locationLong ? `(${locationLong})` : null}
-      </h1>
-      <img src={media.background_medium} />
-      <Player
-        src={`https://stream-relay-geo.ntslive.net/stream${
-          title === "2" ? 2 : ""
-        }?client=NTSWebApp`}
-      />
-      <p>{description}</p>
-    </div>
-  );
-};
-
-const renderHTML = (rawHTML: string) =>
-  React.createElement("span", { dangerouslySetInnerHTML: { __html: rawHTML } });
-
 const Schedule: React.FC = () => {
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
+  const [playing, setPlaying] = useState(null);
 
   // Note: the empty deps array [] means
   // this useEffect will run once
@@ -87,10 +45,18 @@ const Schedule: React.FC = () => {
 
   if (error) {
     return <div>Error: {error.message}</div>;
-  } else if (!isLoaded) {
+  }
+  if (!isLoaded) {
     return <div>Loading...</div>;
-  } else {
-    return (
+  }
+
+  const handlePlaying = (title: string) => {
+    console.log(title, "title");
+    setPlaying(title);
+  };
+
+  return (
+    <>
       <ul>
         {items.map((channel: any) => {
           const { channel_name: channelTitle } = channel;
@@ -99,12 +65,15 @@ const Schedule: React.FC = () => {
               title={channelTitle}
               now={channel.now}
               key={channelTitle}
+              handlePlaying={handlePlaying}
+              isPlaying={playing && playing.title === channelTitle}
             />
           );
         })}
       </ul>
-    );
-  }
+      <NowPlaying channel={playing && playing.title} />
+    </>
+  );
 };
 
 export default Schedule;

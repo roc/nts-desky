@@ -24,7 +24,9 @@ const config: ForgeConfig = {
   plugins: [
     new WebpackPlugin({
       mainConfig,
-      devContentSecurityPolicy: "connect-src 'self' https://www.nts.live/api/",
+      // devContentSecurityPolicy: "connect-src 'self' https://www.nts.live/api/",
+      devContentSecurityPolicy:
+        "connect-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.nts.live/api/ * http://localhost:* ws://localhost:*",
       renderer: {
         config: rendererConfig,
         entryPoints: [
