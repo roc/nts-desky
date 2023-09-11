@@ -37,7 +37,7 @@ const NowPlaying = ({
           </Marquee>
           <audio
             onLoadStart={() => setLoading(channel, true)}
-            onLoadedData={() => setLoading(channel, false)}
+            onCanPlayThrough={() => setLoading(channel, false)}
             src={audioStream(channel)}
             autoPlay={true}
             controls={false}

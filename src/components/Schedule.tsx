@@ -91,7 +91,11 @@ const Schedule: React.FC = () => {
               now={channel.now}
               key={channelTitle}
               handlePlaying={handlePlaying}
-              isLoading={playing && playing.loading === true}
+              isLoading={
+                playing &&
+                playing.loading === true &&
+                playing.title === channelTitle
+              }
               isPlaying={playing && playing.title === channelTitle}
             />
           );
