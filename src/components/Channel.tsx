@@ -34,13 +34,6 @@ const Channel = ({
         onPress={() => handlePlaying(title, now)}
         isPlaying={isPlaying}
       />
-      {/* <Player
-        setPlaying={setPlaying}
-        title={name}
-        src={`https://stream-relay-geo.ntslive.net/stream${
-          title === "2" ? 2 : ""
-        }?client=NTSWebApp`}
-      /> */}
       <p>{description}</p>
     </div>
   );

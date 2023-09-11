@@ -40,7 +40,7 @@ const Schedule: React.FC = () => {
       })
       .then(
         (response) => {
-          console.log(response);
+          console.log("got response from server", response);
           // `response` is of type `AxiosResponse<ServerData>`
           const { data } = response; // `data` is of type ServerData, correctly inferred
 
@@ -66,8 +66,11 @@ const Schedule: React.FC = () => {
   }
 
   const handlePlaying = (title: string, now: Now) => {
-    console.log(title, "title");
-    setPlaying({ title, now });
+    if (playing && playing.title === title) {
+      // toggle player stop
+      return setPlaying(null);
+    }
+    return setPlaying({ title, now });
   };
 
   return (

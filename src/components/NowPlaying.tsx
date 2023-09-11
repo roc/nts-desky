@@ -18,7 +18,7 @@ const NowPlaying = ({
       <>
         <div
           style={{
-            position: "absolute",
+            position: "fixed",
             bottom: 0,
             width: "100%",
           }}

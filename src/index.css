@@ -1,7 +1,6 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Inter", Roboto, Helvetica,
     Arial, sans-serif;
-  margin: auto;
-  /* max-width: 38rem; */
-  /* padding: 2rem; */
+  margin: 0;
+  margin-bottom: 120px;
 }

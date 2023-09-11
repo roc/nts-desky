@@ -5,10 +5,10 @@ const PlayControl = ({
 }: {
   id: string;
   isPlaying: boolean;
-  onPress: (id: string) => void;
+  onPress: () => void;
 }) => {
   return (
-    <button id={id} onClick={(e) => onPress(id)}>
+    <button id={id} onClick={onPress}>
       {id} {isPlaying ? "playing 🟢" : "not playing 🔴"}
     </button>
   );
