@@ -11,11 +11,13 @@ const Channel = ({
   now,
   isPlaying,
   handlePlaying,
+  isLoading,
 }: {
   title: string;
   now: Now;
   isPlaying: boolean;
   handlePlaying: (id: string, now: Now) => void;
+  isLoading: boolean;
 }) => {
   console.log(title, now, typeof title);
   const { broadcast_title: name } = now;
@@ -30,6 +32,7 @@ const Channel = ({
       </h1>
       <img src={media.background_medium} />
       <PlayControl
+        isLoading={isLoading}
         id={title}
         onPress={() => handlePlaying(title, now)}
         isPlaying={isPlaying}

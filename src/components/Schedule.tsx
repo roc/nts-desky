@@ -70,7 +70,13 @@ const Schedule: React.FC = () => {
       // toggle player stop
       return setPlaying(null);
     }
-    return setPlaying({ title, now });
+    return setPlaying({ title, now, loading: true });
+  };
+
+  const setLoading = (title: string, loading: boolean) => {
+    if (playing && playing.title === title) {
+      return setPlaying({ ...playing, loading });
+    }
   };
 
   return (
@@ -85,12 +91,19 @@ const Schedule: React.FC = () => {
               now={channel.now}
               key={channelTitle}
               handlePlaying={handlePlaying}
+              isLoading={playing && playing.loading === true}
               isPlaying={playing && playing.title === channelTitle}
             />
           );
         })}
       </ul>
-      {playing && <NowPlaying channel={playing.title} details={playing.now} />}
+      {playing && (
+        <NowPlaying
+          setLoading={setLoading}
+          channel={playing.title}
+          details={playing.now}
+        />
+      )}
     </>
   );
 };

@@ -9,9 +9,11 @@ const audioStream = (channel: string) =>
 const NowPlaying = ({
   channel,
   details,
+  setLoading,
 }: {
   channel: string;
   details: Now;
+  setLoading: (channel: string, loading: boolean) => void;
 }) => {
   return (
     channel && (
@@ -34,6 +36,8 @@ const NowPlaying = ({
             </h1>
           </Marquee>
           <audio
+            onLoadStart={() => setLoading(channel, true)}
+            onLoadedData={() => setLoading(channel, false)}
             src={audioStream(channel)}
             autoPlay={true}
             controls={false}
