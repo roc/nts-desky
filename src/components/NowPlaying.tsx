@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import type { Now } from "./Schedule";
-
+useState;
 const audioStream = (channel: string) =>
   `https://stream-relay-geo.ntslive.net/stream${
     channel === "2" ? 2 : ""
