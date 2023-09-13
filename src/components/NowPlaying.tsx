@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import type { Now } from "./Schedule";
-import decoded from "./decoded";
+import DecodedHtml from "./Decoded";
 
 useState;
 const audioStream = (channel: string) =>
@@ -78,8 +78,10 @@ const NowPlaying = ({
               }}
             >
               <h1 className="scillanarrow_italic" style={{ fontSize: "2em" }}>
-                {decoded(`Now Playing: ${details.broadcast_title} on channel`)}{" "}
-                {channel}
+                <DecodedHtml>
+                  Now Playing: {details.broadcast_title} on {channel}
+                  {""}
+                </DecodedHtml>
               </h1>
             </Marquee>
           </div>

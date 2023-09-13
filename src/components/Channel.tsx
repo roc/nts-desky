@@ -1,7 +1,7 @@
 import React from "react";
 import PlayControl from "./PlayControl";
 import type { Now } from "./Schedule";
-import decoded from "./decoded";
+import DecodedHtml from "./Decoded";
 PlayControl;
 
 const Channel = ({
@@ -26,9 +26,9 @@ const Channel = ({
   return (
     <div key={title}>
       <h2>
-        {decoded(
-          `${title}: ${name} ${locationLong ? `(${locationLong})` : null}`
-        )}
+        <DecodedHtml>
+          {title}: {name} {locationLong ? `(${locationLong})` : null}
+        </DecodedHtml>
       </h2>
       <img src={media.background_medium} />
       <PlayControl
