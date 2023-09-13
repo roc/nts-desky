@@ -1,6 +1,159 @@
+@font-face {
+  font-family: "scillaregular";
+  src: url("../public/fonts/scilla_regular-webfont.woff2") format("woff2"),
+    url("../public/fonts/scilla_regular-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "scillaregular_italic";
+  src: url("../public/fonts/scilla_regular_italic-webfont.woff2")
+      format("woff2"),
+    url("../public/fonts/scilla_regular_italic-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "scillanarrow";
+  src: url("../public/fonts/scilla_narrow-webfont.woff2") format("woff2"),
+    url("../public/fonts/scilla_narrow-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "scillanarrow_italic";
+  src: url("../public/fonts/scilla_narrow_italic-webfont.woff2") format("woff2"),
+    url("../public/fonts/scilla_narrow_italic-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Inter", Roboto, Helvetica,
+  font-smooth: 2em;
+  -webkit-font-smoothing: subpixel-antialiased;
+  background-color: black;
+  color: white;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, Roboto, Helvetica,
     Arial, sans-serif;
   margin: 0;
   margin-bottom: 120px;
+}
+
+.container {
+  width: 80%;
+  float: none;
+  margin: 0 auto;
+}
+
+ul {
+  padding: 0;
+}
+
+h1 {
+  font-family: "scillaregular_italic", "Comic Sans MS", cursive;
+  font-size: 4rem;
+}
+
+.scillaregular {
+  font-family: "scillaregular", "Comic Sans MS", cursive;
+}
+.scillanarrow {
+  font-family: "scillanarrow", "Comic Sans MS", cursive;
+}
+.scillanarrow_italic {
+  font-family: "scillanarrow_italic", "Comic Sans MS", cursive;
+}
+
+.smallen {
+  font-size: 50%;
+}
+
+button:hover,
+input[type="range"]:hover {
+  cursor: pointer;
+}
+
+input[type="range"]:active {
+  cursor: grabbing;
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  filter: brightness(var(--brightness-hover));
+  cursor: grab;
+}
+input[type="range"] {
+  color: rgb(239, 35, 60);
+  --thumb-height: 1.125em;
+  --track-height: 0.325em;
+  --track-color: rgba(255, 45, 80, 0.177);
+  --brightness-hover: 180%;
+  --brightness-down: 80%;
+  --clip-edges: 0.125em;
+  position: relative;
+  background: #fff0;
+  overflow: hidden;
+}
+
+/* === WebKit specific styles === */
+input[type="range"],
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  transition: all ease 100ms;
+  height: var(--thumb-height);
+}
+
+input[type="range"]::-webkit-slider-runnable-track,
+input[type="range"]::-webkit-slider-thumb {
+  position: relative;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  --thumb-radius: calc((var(--thumb-height) * 0.5) - 1px);
+  --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
+  --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
+  --clip-further: calc(100% + 1px);
+  --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
+    100vmax currentColor;
+
+  width: var(--thumb-width, var(--thumb-height));
+  background: linear-gradient(currentColor 0 0) scroll no-repeat left center /
+    50% calc(var(--track-height) + 1px);
+  background-color: currentColor;
+  box-shadow: var(--box-fill);
+  border-radius: var(--thumb-width, var(--thumb-height));
+
+  filter: brightness(100%);
+  clip-path: polygon(
+    100% -1px,
+    var(--clip-edges) -1px,
+    0 var(--clip-top),
+    -100vmax var(--clip-top),
+    -100vmax var(--clip-bottom),
+    0 var(--clip-bottom),
+    var(--clip-edges) 100%,
+    var(--clip-further) var(--clip-further)
+  );
+}
+
+input[type="range"]:hover::-webkit-slider-thumb {
+  filter: brightness(var(--brightness-hover));
+  cursor: grab;
+}
+
+input[type="range"]:active::-webkit-slider-thumb {
+  filter: brightness(var(--brightness-down));
+  cursor: grabbing;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center /
+    100% calc(var(--track-height) + 1px);
+}
+
+input[type="range"]:disabled::-webkit-slider-thumb {
+  cursor: not-allowed;
 }

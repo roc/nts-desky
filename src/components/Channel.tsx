@@ -1,10 +1,8 @@
 import React from "react";
 import PlayControl from "./PlayControl";
 import type { Now } from "./Schedule";
+import decoded from "./decoded";
 PlayControl;
-
-const renderHTML = (rawHTML: string) =>
-  React.createElement("span", { dangerouslySetInnerHTML: { __html: rawHTML } });
 
 const Channel = ({
   title,
@@ -27,9 +25,11 @@ const Channel = ({
   console.log("i am handlePlaying", handlePlaying);
   return (
     <div key={title}>
-      <h1>
-        {title}: {renderHTML(name)} {locationLong ? `(${locationLong})` : null}
-      </h1>
+      <h2>
+        {decoded(
+          `${title}: ${name} ${locationLong ? `(${locationLong})` : null}`
+        )}
+      </h2>
       <img src={media.background_medium} />
       <PlayControl
         isLoading={isLoading}

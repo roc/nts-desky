@@ -13,7 +13,6 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 
 root.render(
   <>
-    <h1>NT DESK 0.0.1 💖</h1>
     <Schedule />
   </>
 );

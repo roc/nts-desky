@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import type { Now } from "./Schedule";
+import decoded from "./decoded";
+
 useState;
 const audioStream = (channel: string) =>
   `https://stream-relay-geo.ntslive.net/stream${
@@ -45,8 +47,11 @@ const NowPlaying = ({
         >
           <div style={{ display: "block", height: "100%" }}>
             <label htmlFor="volume" style={{ color: "white" }}>
-              Volume
+              <em>volume</em>
               <input
+                style={{
+                  fontSize: "1.5rem",
+                }}
                 name="volume"
                 type="range"
                 min={0}
@@ -72,8 +77,9 @@ const NowPlaying = ({
                 color: "white",
               }}
             >
-              <h1>
-                Now Playing: {details.broadcast_title} on channel {channel}{" "}
+              <h1 className="scillanarrow_italic" style={{ fontSize: "2em" }}>
+                {decoded(`Now Playing: ${details.broadcast_title} on channel`)}{" "}
+                {channel}
               </h1>
             </Marquee>
           </div>

@@ -82,26 +82,33 @@ const Schedule: React.FC = () => {
 
   return (
     <>
-      <ul>
-        {items.map((channel: any) => {
-          console.log("actual channel info", channel);
-          const { channel_name: channelTitle } = channel;
-          return (
-            <Channel
-              title={channelTitle}
-              now={channel.now}
-              key={channelTitle}
-              handlePlaying={handlePlaying}
-              isLoading={
-                playing &&
-                playing.loading === true &&
-                playing.title === channelTitle
-              }
-              isPlaying={playing && playing.title === channelTitle}
-            />
-          );
-        })}
-      </ul>
+      <div className="container">
+        <h1>
+          NT<span className="scillaregular smallen">de</span>S
+          <span className="scillaregular smallen">k</span>{" "}
+          <span className="scillaregular">0.0.2 💖</span>
+        </h1>
+        <ul>
+          {items.map((channel: any) => {
+            console.log("actual channel info", channel);
+            const { channel_name: channelTitle } = channel;
+            return (
+              <Channel
+                title={channelTitle}
+                now={channel.now}
+                key={channelTitle}
+                handlePlaying={handlePlaying}
+                isLoading={
+                  playing &&
+                  playing.loading === true &&
+                  playing.title === channelTitle
+                }
+                isPlaying={playing && playing.title === channelTitle}
+              />
+            );
+          })}
+        </ul>
+      </div>
       {playing && (
         <NowPlaying
           setLoading={setLoading}

@@ -10,11 +10,15 @@ const PlayControl = ({
   isLoading: boolean;
 }) => {
   return (
-    <>
+    <div
+      style={{
+        display: "flex",
+      }}
+    >
       <button id={id} onClick={onPress}>
         {isLoading ? "⏳ Loading..." : isPlaying ? "⏸ Pause" : "▶️ Play"}{" "}
       </button>
-    </>
+    </div>
   );
 };
 
