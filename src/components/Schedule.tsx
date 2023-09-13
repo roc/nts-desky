@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import NowPlaying from "./NowPlaying";
 import Channel from "./Channel";
@@ -25,6 +25,7 @@ export type Now = {
 };
 
 const Schedule: React.FC = () => {
+  const audioRef = useRef();
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
   const [items, setItems] = useState([]);
@@ -106,6 +107,7 @@ const Schedule: React.FC = () => {
           setLoading={setLoading}
           channel={playing.title}
           details={playing.now}
+          audioRef={audioRef}
         />
       )}
     </>

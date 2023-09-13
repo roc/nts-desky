@@ -11,11 +11,21 @@ const NowPlaying = ({
   channel,
   details,
   setLoading,
+  audioRef,
 }: {
   channel: string;
   details: Now;
   setLoading: (channel: string, loading: boolean) => void;
+  audioRef: React.MutableRefObject<HTMLAudioElement>;
 }) => {
+  const [volume, setVolume] = useState(60);
+
+  useEffect(() => {
+    if (audioRef) {
+      audioRef.current.volume = volume / 100;
+    }
+  }, [volume, audioRef]);
+
   return (
     channel && (
       <>
@@ -24,25 +34,49 @@ const NowPlaying = ({
             position: "fixed",
             bottom: 0,
             width: "100%",
+            display: "grid",
+            gridTemplateRows: "1fr",
+            gridTemplateColumns: "1fr 8fr",
+            gridColumnGap: "40px",
+            gridRowGap: "40px",
+            padding: "10px",
+            backgroundColor: "black",
           }}
         >
-          <Marquee
-            style={{
-              backgroundColor: "black",
-              color: "white",
-            }}
-          >
-            <h1>
-              Now Playing: {details.broadcast_title} on channel {channel}
-            </h1>
-          </Marquee>
-          <audio
-            onLoadStart={() => setLoading(channel, true)}
-            onCanPlayThrough={() => setLoading(channel, false)}
-            src={audioStream(channel)}
-            autoPlay={true}
-            controls={false}
-          ></audio>
+          <div style={{ display: "block", height: "100%" }}>
+            <label htmlFor="volume" style={{ color: "white" }}>
+              Volume
+              <input
+                name="volume"
+                type="range"
+                min={0}
+                max={100}
+                value={volume}
+                onChange={(e) => setVolume(Number(e.target.value))}
+              />
+            </label>
+
+            <audio
+              ref={audioRef}
+              onLoadStart={() => setLoading(channel, true)}
+              onCanPlayThrough={() => setLoading(channel, false)}
+              src={audioStream(channel)}
+              autoPlay={true}
+              controls={false}
+            />
+          </div>
+          <div style={{ display: "block", height: "100%" }}>
+            <Marquee
+              style={{
+                backgroundColor: "black",
+                color: "white",
+              }}
+            >
+              <h1>
+                Now Playing: {details.broadcast_title} on channel {channel}{" "}
+              </h1>
+            </Marquee>
+          </div>
         </div>
       </>
     )
