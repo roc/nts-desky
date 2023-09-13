@@ -3,7 +3,7 @@ import React from "react";
 // import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import "./index.css";
 // import App from "./App";
-import Schedule from "./Schedule";
+import Schedule from "./components/Schedule";
 // import About from "./About";
 // import reportWebVitals from "./reportWebVitals";
 // import "./App.css";
@@ -13,17 +13,8 @@ const root = createRoot(container); // createRoot(container!) if you use TypeScr
 
 root.render(
   <>
-    <h1>NT DESK 0.0.1 💖</h1>
     <Schedule />
   </>
-  /*<React.StrictMode>
-     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </Router> 
-  </React.StrictMode>*/
 );
 
 // If you want to start measuring performance in your app, pass a function
