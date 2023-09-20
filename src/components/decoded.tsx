@@ -1,10 +1,11 @@
 import { decode } from "html-entities";
 import { Children } from "react";
 
-const DecodedHtml = ({ children }: { children: any }) => {
+const DecodedHtml = ({ children }: { children: React.ReactNode }) => {
+  const childrenArray = Children.toArray(children);
   return (
     <>
-      {Children.map(children, (child) =>
+      {childrenArray.map((child: string | JSX.Element) =>
         typeof child === "string" ? decode(child) : child
       )}
     </>
