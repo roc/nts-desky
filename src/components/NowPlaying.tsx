@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Marquee from "react-fast-marquee";
 import type { Now } from "./Schedule";
-import DecodedHtml from "./Decoded";
+import DecodedHtml from "./DecodedHtml";
 import PlayControl from "./PlayControl";
 
 const audioStream = (channel: string) =>

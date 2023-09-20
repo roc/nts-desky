@@ -1,7 +1,7 @@
 import React from "react";
 import PlayControl from "./PlayControl";
-import type { Now } from "./App";
-import DecodedHtml from "./Decoded";
+import type { Now } from "./Schedule";
+import DecodedHtml from "./DecodedHtml";
 import FixedWidthContainer from "./FixedWidthContainer";
 PlayControl;
 
