@@ -1,7 +1,8 @@
 import React from "react";
 import PlayControl from "./PlayControl";
-import type { Now } from "./Schedule";
+import type { Now } from "./App";
 import DecodedHtml from "./Decoded";
+import FixedWidthContainer from "./FixedWidthContainer";
 PlayControl;
 
 const Channel = ({
@@ -17,15 +18,18 @@ const Channel = ({
   handlePlaying: (id: string, now: Now) => void;
   isLoading: boolean;
 }) => {
-  console.log(title, now, typeof title);
   const { broadcast_title: name } = now;
   const { embeds } = now;
   const { details } = embeds;
   const { description, media, location_long: locationLong } = details;
-  console.log("i am handlePlaying", handlePlaying);
+
   return (
-    <div key={title}>
-      <h2>
+    <FixedWidthContainer
+      key={title}
+      className="grid place-items-center gap-y-5 pb-20"
+      containerWidth="420px"
+    >
+      <h2 className="gooper-regular text-xl">
         <DecodedHtml>
           {title}: {name} {locationLong ? `(${locationLong})` : null}
         </DecodedHtml>
@@ -38,7 +42,7 @@ const Channel = ({
         isPlaying={isPlaying}
       />
       <p>{description}</p>
-    </div>
+    </FixedWidthContainer>
   );
 };
 

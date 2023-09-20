@@ -14,3 +14,13 @@ git clone
 npm i
 npm run start
 ```
+
+### Features I'd enjoy help with
+
+[*] Schedule refreshing
+[*] player control in NowPlaying
+[ ] groovy player animations
+[ ] Auto shajazzle? https://dev.to/jonathz/build-a-shazam-clone-with-nodejs-med
+[ ] Chatroom next to channel
+[ ] Preferences Pane and login(?)
+[ ] user testing

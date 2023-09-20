@@ -1,11 +1,13 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import NowPlaying from "./NowPlaying";
 import Channel from "./Channel";
+import FixedWidthContainer from "./FixedWidthContainer";
+import TitleHeading from "./TitleHeading";
+import PlayControl from "./PlayControl";
+import { usePollingEffect } from "../hooks/usePollingEffect";
 
 interface ServerData {
-  foo: string;
-  bar: number;
   results: [];
 }
 
@@ -28,36 +30,38 @@ const Schedule: React.FC = () => {
   const audioRef = useRef();
   const [error, setError] = useState(null);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [items, setItems] = useState([]);
+  const [channels, setChannels] = useState([]);
   const [playing, setPlaying] = useState(null);
 
-  // Note: the empty deps array [] means
-  // this useEffect will run once
-  // similar to componentDidMount()
-  useEffect(() => {
-    axios
-      .request<ServerData>({
-        url: `https://www.nts.live/api/v2/live`,
-      })
-      .then(
-        (response) => {
-          console.log("got response from server", response);
-          // `response` is of type `AxiosResponse<ServerData>`
-          const { data } = response; // `data` is of type ServerData, correctly inferred
+  usePollingEffect({
+    asyncCallback: async () => {
+      axios
+        .request<ServerData>({
+          url: `https://www.nts.live/api/v2/live`,
+        })
+        .then(
+          (response) => {
+            console.log("got response from server", response);
+            // `response` is of type `AxiosResponse<ServerData>`
+            const { data } = response; // `data` is of type ServerData, correctly inferred
 
-          setIsLoaded(true);
-          setItems(data.results);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          setIsLoaded(true);
-          setError(error);
-          console.log(error);
-        }
-      );
-  }, []);
+            setIsLoaded(true);
+            setChannels(data.results);
+          },
+          // Note: it's important to handle errors here
+          // instead of a catch() block so that we don't swallow
+          // exceptions from actual bugs in components.
+          (error) => {
+            setIsLoaded(true);
+            setError(error);
+            console.log(error);
+          }
+        );
+    },
+    // leaving dependencies empty seeing as we're only interested in the two channels for now and not browsing etc
+
+    interval: 20000, // check every 20 seconds
+  });
 
   if (error) {
     return <div>Error: {error.message}</div>;
@@ -80,42 +84,44 @@ const Schedule: React.FC = () => {
     }
   };
 
+  const ChannelList = ({ channels }: { channels: any }) => {
+    return channels.map((channel: { now: Now; channel_name: string }) => {
+      const { channel_name: channelTitle } = channel;
+      return (
+        <Channel
+          title={channelTitle}
+          now={channel.now}
+          key={channelTitle}
+          handlePlaying={handlePlaying}
+          isLoading={
+            playing &&
+            playing.loading === true &&
+            playing.title === channelTitle
+          }
+          isPlaying={playing && playing.title === channelTitle}
+        />
+      );
+    });
+  };
+
   return (
     <>
-      <div className="container">
-        <h1>
-          NT<span className="scillaregular smallen">de</span>S
-          <span className="scillaregular smallen">k</span>{" "}
-          <span className="scillaregular">0.0.2 💖</span>
-        </h1>
-        <ul>
-          {items.map((channel: any) => {
-            console.log("actual channel info", channel);
-            const { channel_name: channelTitle } = channel;
-            return (
-              <Channel
-                title={channelTitle}
-                now={channel.now}
-                key={channelTitle}
-                handlePlaying={handlePlaying}
-                isLoading={
-                  playing &&
-                  playing.loading === true &&
-                  playing.title === channelTitle
-                }
-                isPlaying={playing && playing.title === channelTitle}
-              />
-            );
-          })}
-        </ul>
-      </div>
+      <FixedWidthContainer
+        containerWidth="100%"
+        className="grid place-items-center container mx-auto pt-10"
+      >
+        <TitleHeading version="0.0.2" />
+        <ChannelList channels={channels} />
+      </FixedWidthContainer>
       {playing && (
-        <NowPlaying
-          setLoading={setLoading}
-          channel={playing.title}
-          details={playing.now}
-          audioRef={audioRef}
-        />
+        <>
+          <NowPlaying
+            setLoading={setLoading}
+            playing={playing}
+            audioRef={audioRef}
+            handlePlaying={handlePlaying}
+          />
+        </>
       )}
     </>
   );

@@ -1,38 +1,41 @@
 @font-face {
   font-family: "scillaregular";
-  src: url("../public/fonts/scilla_regular-webfont.woff2") format("woff2"),
-    url("../public/fonts/scilla_regular-webfont.woff") format("woff");
+  src: url("../public/fonts/scilla/scilla_regular-webfont.woff2")
+      format("woff2"),
+    url("../public/fonts/scilla/scilla_regular-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "scillaregular_italic";
-  src: url("../public/fonts/scilla_regular_italic-webfont.woff2")
+  src: url("../public/fonts/scilla/scilla_regular_italic-webfont.woff2")
       format("woff2"),
-    url("../public/fonts/scilla_regular_italic-webfont.woff") format("woff");
+    url("../public/fonts/scilla/scilla_regular_italic-webfont.woff")
+      format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "scillanarrow";
-  src: url("../public/fonts/scilla_narrow-webfont.woff2") format("woff2"),
-    url("../public/fonts/scilla_narrow-webfont.woff") format("woff");
+  src: url("../public/fonts/scilla/scilla_narrow-webfont.woff2") format("woff2"),
+    url("../public/fonts/scilla/scilla_narrow-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "scillanarrow_italic";
-  src: url("../public/fonts/scilla_narrow_italic-webfont.woff2") format("woff2"),
-    url("../public/fonts/scilla_narrow_italic-webfont.woff") format("woff");
+  src: url("../public/fonts/scilla/scilla_narrow_italic-webfont.woff2")
+      format("woff2"),
+    url("../public/fonts/scilla/scilla_narrow_italic-webfont.woff")
+      format("woff");
   font-weight: normal;
   font-style: normal;
 }
 
 body {
-  font-smooth: 2em;
   -webkit-font-smoothing: subpixel-antialiased;
   background-color: black;
   color: white;
@@ -52,18 +55,16 @@ ul {
   padding: 0;
 }
 
-h1 {
-  font-family: "scillaregular_italic", "Comic Sans MS", cursive;
-  font-size: 4rem;
-}
-
-.scillaregular {
+.scilla-regular {
   font-family: "scillaregular", "Comic Sans MS", cursive;
 }
-.scillanarrow {
+.scilla-regular-italic {
+  font-family: "scillaregular_italic", "Comic Sans MS", cursive;
+}
+.scilla-narrow {
   font-family: "scillanarrow", "Comic Sans MS", cursive;
 }
-.scillanarrow_italic {
+.scilla-narrow-italic {
   font-family: "scillanarrow_italic", "Comic Sans MS", cursive;
 }
 
@@ -156,4 +157,20 @@ input[type="range"]::-webkit-slider-runnable-track {
 
 input[type="range"]:disabled::-webkit-slider-thumb {
   cursor: not-allowed;
+}
+
+/* Draggy */
+body {
+  /* -webkit-user-select: none; */
+  -webkit-app-region: drag;
+}
+
+/* No draggy */
+h1,
+input,
+label,
+p,
+img,
+a {
+  -webkit-app-region: no-drag;
 }
