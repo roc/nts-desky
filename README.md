@@ -19,3 +19,4 @@ npm start
 - [ ] user testing
 - [x] ~Schedule refreshing~
 - [x] ~player control in NowPlaying~
+- [ ] set "playing" to a context that all child components can use

@@ -35,12 +35,13 @@
   font-style: normal;
 }
 
+/* TODO: move to theme, have dark/light opts */
 body {
   -webkit-font-smoothing: subpixel-antialiased;
   background-color: black;
   color: white;
   font-family: "Inter", -apple-system, BlinkMacSystemFont, Roboto, Helvetica,
-    Arial, sans-serif;
+    sans-serif;
   margin: 0;
   margin-bottom: 120px;
 }
@@ -173,4 +174,32 @@ p,
 img,
 a {
   -webkit-app-region: no-drag;
+}
+
+html,
+body {
+  font-weight: 400;
+  font-style: normal;
+}
+
+p {
+  font-size: 1em;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+  border-radius: 100%;
+  box-sizing: border-box;
+  animation: animloader 2s linear infinite;
+}
+
+@keyframes animloader {
+  0% {
+    box-shadow: -60px -60px #fff inset;
+  }
+  100% {
+    box-shadow: 60px 55px #fff inset;
+  }
 }

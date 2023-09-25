@@ -4,7 +4,6 @@ import NowPlaying from "./NowPlaying";
 import Channel from "./Channel";
 import FixedWidthContainer from "./FixedWidthContainer";
 import TitleHeading from "./TitleHeading";
-import PlayControl from "./PlayControl";
 import { usePollingEffect } from "../hooks/usePollingEffect";
 
 interface ServerData {
@@ -26,6 +25,18 @@ export type Now = {
   };
 };
 
+const Notice = ({
+  classNames,
+  children,
+}: {
+  classNames: string;
+  children: React.ReactNode;
+}) => (
+  <div className={`${classNames} grid h-screen place-items-center`}>
+    {children}
+  </div>
+);
+
 const Schedule: React.FC = () => {
   const audioRef = useRef();
   const [error, setError] = useState(null);
@@ -35,9 +46,15 @@ const Schedule: React.FC = () => {
 
   usePollingEffect({
     asyncCallback: async () => {
+      // Only poll if the app is visible when it's loaded
+      // if we haven't loaded channels once (aka initial load), still poll!
+      if (isLoaded && document.visibilityState !== "visible") {
+        return;
+      }
       axios
         .request<ServerData>({
-          url: `https://www.nts.live/api/v2/live`,
+          // cache-bust using current time
+          url: `https://www.nts.live/api/v2/live?t=${new Date().getTime()}`,
         })
         .then(
           (response) => {
@@ -59,15 +76,25 @@ const Schedule: React.FC = () => {
         );
     },
     // leaving dependencies empty seeing as we're only interested in the two channels for now and not browsing etc
-
-    interval: 20000, // check every 20 seconds
+    interval: 60000, // check every 60 seconds
   });
 
   if (error) {
-    return <div>Error: {error.message}</div>;
+    return (
+      <Notice classNames={"text-4xl"}>
+        Error: {error.message}
+        <br />
+        <br />
+        (try hitting ⌘ + R)
+      </Notice>
+    );
   }
   if (!isLoaded) {
-    return <div>Loading...</div>;
+    return (
+      <Notice classNames={"scilla-regular-italic text-6xl font-extrabold mb-6"}>
+        Loading...
+      </Notice>
+    );
   }
 
   const handlePlaying = (title: string, now: Now) => {

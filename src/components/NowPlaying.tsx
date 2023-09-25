@@ -48,40 +48,32 @@ const NowPlaying = ({
 
   return (
     <>
+      <audio
+        ref={audioRef}
+        onLoadStart={() => setLoading(title, true)}
+        onCanPlayThrough={() => setLoading(title, false)}
+        src={audioStream(title)}
+        autoPlay={true}
+        controls={false}
+      />
       <div
+        className="fixed grid justify-items-stretch bottom-0 bg-black grid-cols-3 w-full gap-5 p-5"
         style={{
-          position: "fixed",
-          bottom: 0,
-          width: "100%",
-          display: "grid",
-          gridTemplateRows: "1fr",
-          gridTemplateColumns: "1fr 8fr 1fr",
-          gridColumnGap: "40px",
-          gridRowGap: "40px",
-          padding: "10px",
-          backgroundColor: "black",
+          gridTemplateColumns: "80px auto 1fr",
         }}
       >
-        <audio
-          ref={audioRef}
-          onLoadStart={() => setLoading(title, true)}
-          onCanPlayThrough={() => setLoading(title, false)}
-          src={audioStream(title)}
-          autoPlay={true}
-          controls={false}
-        />
         <PlayControl
           isLoading={playing.loading === true}
           id={playing.title}
           onPress={() => handlePlaying(title, now)}
           isPlaying={playing.loading === false}
         />
+
         <div style={{ display: "block", height: "100%" }}>
           <Marquee
             style={{
               backgroundColor: "black",
               color: "white",
-              width: "100%",
             }}
           >
             <h1 className="scilla-narrow-italic text-3xl mt-3">
@@ -92,6 +84,7 @@ const NowPlaying = ({
             <MarqueeSpacer spaces={5} />
           </Marquee>
         </div>
+
         <div
           className="volumeControls"
           style={{

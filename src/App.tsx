@@ -3,6 +3,7 @@ import React from "react";
 
 import Schedule from "./components/Schedule";
 // import reportWebVitals from "./reportWebVitals";
+import "./inter-font.css";
 import "./gooper-font.css";
 import "./App.css";
 import "./index.css";

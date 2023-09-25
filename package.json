@@ -1,15 +1,16 @@
 {
   "name": "nts-desky",
   "productName": "nts-desky",
-  "version": "1.0.0",
+  "version": "0.0.2",
   "description": "My Electron application description",
   "main": ".webpack/main",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "electron-forge start & npm run css",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "eslint --ext .ts,.tsx ."
+    "lint": "eslint --ext .ts,.tsx .",
+    "css": "tailwindcss -i ./src/input.css -o ./src/App.css --watch"
   },
   "keywords": [],
   "author": {

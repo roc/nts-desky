@@ -1,13 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 
+
 @layer base {
   h1 {
-    @apply text-6xl;
-    @apply mb-5;
+    /* @apply text-9xl;
+    @apply m-52; */
   }
   h2 {
-    @apply text-xl;
+    /* @apply text-xl; */
   }
-} */
+}
