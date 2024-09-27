@@ -39,8 +39,10 @@ const Schedule: React.FC = () => {
   const [isLoaded, setIsLoaded] = useState(false);
   const [channels, setChannels] = useState([]);
   const [playing, setPlaying] = useState(null);
+  const [broadcastReference, setBroadcastReference] = useState(0);
 
   usePollingEffect({
+    dependencies: [broadcastReference],
     asyncCallback: async () => {
       axios
         .request<ServerData>({
@@ -50,16 +52,20 @@ const Schedule: React.FC = () => {
           (response) => {
             console.log("got response from server", response);
             // `response` is of type `AxiosResponse<ServerData>`
-            const { data } = response; // `data` is of type ServerData, correctly inferred
+            const { headers, data } = response; // `data` is of type ServerData, correctly inferred
 
             setIsLoaded(true);
-            setChannels(data.results);
-            if (playing) {
-              // find the Now of whichever channel is playing
-              const now = data.results.find(
-                (result) => result.channel_name === playing
-              )?.now;
-              setPlaying({ ...playing, loading: false, now });
+            // if the results are different, update the channels
+            if (Number(headers["content-length"]) !== broadcastReference) {
+              setBroadcastReference(Number(headers["content-length"]));
+              setChannels(data.results);
+              if (playing) {
+                // find the Now of whichever channel is playing
+                const now = data.results.find(
+                  (result) => result.channel_name === playing
+                )?.now;
+                setPlaying({ ...playing, loading: false, now });
+              }
             }
           },
           // Note: it's important to handle errors here
