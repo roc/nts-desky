@@ -34,7 +34,7 @@ const Channel = ({
           {title}: {name} {locationLong ? `(${locationLong})` : null}
         </DecodedHtml>
       </h2>
-      <img src={media.background_medium} />
+      <img src={media.background_large} />
       <PlayControl
         isLoading={isLoading}
         id={title}
