@@ -7,8 +7,13 @@ import TitleHeading from "./TitleHeading";
 import PlayControl from "./PlayControl";
 import { usePollingEffect } from "../hooks/usePollingEffect";
 
+type RadioServerResult = {
+  channel_name: string;
+  now: Now;
+};
+
 interface ServerData {
-  results: [];
+  results: Array<RadioServerResult>;
 }
 
 export type Now = {
@@ -47,6 +52,13 @@ const Schedule: React.FC = () => {
 
             setIsLoaded(true);
             setChannels(data.results);
+            if (playing) {
+              // find the Now of whichever channel is playing
+              const now = data.results.find(
+                (result) => result.channel_name === playing
+              )?.now;
+              setPlaying({ ...playing, loading: false, now });
+            }
           },
           // Note: it's important to handle errors here
           // instead of a catch() block so that we don't swallow
