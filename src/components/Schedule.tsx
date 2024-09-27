@@ -18,6 +18,8 @@ interface ServerData {
 
 export type Now = {
   broadcast_title: string;
+  start_timestamp: Date;
+  end_timestamp: Date;
   // TODO: embed/details Interface
   embeds: {
     details: {

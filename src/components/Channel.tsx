@@ -4,6 +4,7 @@ import type { Now } from "./Schedule";
 import DecodedHtml from "./DecodedHtml";
 import FixedWidthContainer from "./FixedWidthContainer";
 PlayControl;
+import fromnow from "fromnow";
 
 const Channel = ({
   title,
@@ -19,7 +20,7 @@ const Channel = ({
   isLoading: boolean;
 }) => {
   const { broadcast_title: name } = now;
-  const { embeds } = now;
+  const { embeds, end_timestamp: endTimestamp } = now;
   const { details } = embeds;
   const { description, media, location_long: locationLong } = details;
 
@@ -30,10 +31,12 @@ const Channel = ({
       containerWidth="420px"
     >
       <h2 className="gooper-regular text-xl">
+        <span className="p-4 bg-white rounded-full text-black">{title}: </span>
         <DecodedHtml>
-          {title}: {name} {locationLong ? `(${locationLong})` : null}
+          {name} {locationLong ? `(${locationLong})` : null}
         </DecodedHtml>
       </h2>
+      <h3>{fromnow(endTimestamp)} left</h3>
       <img src={media.background_large} />
       <PlayControl
         isLoading={isLoading}
