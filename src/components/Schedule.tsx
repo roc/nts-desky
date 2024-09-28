@@ -135,7 +135,7 @@ const Schedule: React.FC = () => {
         containerWidth="100%"
         className="grid place-items-center container mx-auto pt-10"
       >
-        <TitleHeading version="0.0.2" />
+        <TitleHeading version="0.0.3" />
         <ChannelList channels={channels} />
       </FixedWidthContainer>
       {playing && (

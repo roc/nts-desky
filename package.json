@@ -1,8 +1,9 @@
 {
   "name": "nts-desky",
   "productName": "nts-desky",
-  "version": "1.0.0",
-  "description": "My Electron application description",
+  "version": "0.0.3",
+  "repository": "https://github.com/roc/nts-desky",
+  "description": "bootleg nts desktop application for the heads",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
@@ -14,7 +15,8 @@
   "keywords": [],
   "author": {
     "name": "Ralph Cowling",
-    "email": "ralph@ralph-cowling.com"
+    "email": "ralph@ralph-cowling.com",
+    "url": "https://ralph-cowling.com"
   },
   "license": "MIT",
   "devDependencies": {
@@ -55,6 +57,7 @@
     "html-entities": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-fast-marquee": "^1.6.0"
+    "react-fast-marquee": "^1.6.0",
+    "update-electron-app": "^3.0.0"
   }
 }
