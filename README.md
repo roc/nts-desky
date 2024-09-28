@@ -1,8 +1,14 @@
 # nts desktop edition
 
-<img width="588" alt="Screenshot of player looking really nice actually" src="https://github.com/roc/nts-desky/assets/120181/955edf94-71f2-42dd-9f0a-1cb63ec0fa55" />  
+<img width="632" alt="Screenshot 2024-09-28 at 15 35 58" src="https://github.com/user-attachments/assets/c606e67c-abe3-44a6-8034-91261669e22e">
 
-## install:
+## os x users:
+
+install the latest player from [the releases page](https://github.com/roc/nts-desky/releases)
+
+windows and linux builds coming soon
+
+## for devlopers:
 
 ```
 git clone
@@ -12,10 +18,11 @@ npm start
 
 ## Features I'd enjoy help with
 
-- [ ] Groovy player animations
-- [ ] Auto shajazzle? https://dev.to/jonathz/build-a-shazam-clone-with-nodejs-med
-- [ ] Chatroom next to channel
+- [ ] Auto fingerprinting the playing track https://dev.to/jonathz/build-a-shazam-clone-with-nodejs-med
+- [ ] Chatroom next to channel (nts uses discord, who aren't keen on embedding)
 - [ ] Preferences Pane and login(?)
 - [ ] user testing
 - [x] ~Schedule refreshing~
 - [x] ~player control in NowPlaying~
+- [x] ~auto updating~
+ 
