@@ -4,7 +4,6 @@ import NowPlaying from "./NowPlaying";
 import Channel from "./Channel";
 import FixedWidthContainer from "./FixedWidthContainer";
 import TitleHeading from "./TitleHeading";
-import PlayControl from "./PlayControl";
 import { usePollingEffect } from "../hooks/usePollingEffect";
 
 type RadioServerResult = {
@@ -93,9 +92,14 @@ const Schedule: React.FC = () => {
   const handlePlaying = (title: string, now: Now) => {
     if (playing && playing.title === title) {
       // toggle player stop
-      return setPlaying(null);
+      return setPlaying({
+        title,
+        now,
+        paused: !playing.paused,
+        loading: false,
+      });
     }
-    return setPlaying({ title, now, loading: true });
+    return setPlaying({ title, now, loading: true, paused: false });
   };
 
   const setLoading = (title: string, loading: boolean) => {
@@ -109,6 +113,7 @@ const Schedule: React.FC = () => {
       const { channel_name: channelTitle } = channel;
       return (
         <Channel
+          paused={playing?.paused}
           title={channelTitle}
           now={channel.now}
           key={channelTitle}
@@ -134,14 +139,12 @@ const Schedule: React.FC = () => {
         <ChannelList channels={channels} />
       </FixedWidthContainer>
       {playing && (
-        <>
-          <NowPlaying
-            setLoading={setLoading}
-            playing={playing}
-            audioRef={audioRef}
-            handlePlaying={handlePlaying}
-          />
-        </>
+        <NowPlaying
+          setLoading={setLoading}
+          playing={playing}
+          audioRef={audioRef}
+          handlePlaying={handlePlaying}
+        />
       )}
     </>
   );

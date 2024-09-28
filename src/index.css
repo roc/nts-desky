@@ -39,8 +39,8 @@ body {
   -webkit-font-smoothing: subpixel-antialiased;
   background-color: black;
   color: white;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, Roboto, Helvetica,
-    Arial, sans-serif;
+  font-family: punctuation, ui-sans-serif, system-ui, sans-serif, "Inter",
+    -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
   margin: 0;
   margin-bottom: 120px;
 }
