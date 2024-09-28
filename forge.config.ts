@@ -21,6 +21,18 @@ const config: ForgeConfig = {
     new MakerRpm({}),
     new MakerDeb({}),
   ],
+  publishers: [
+    {
+      name: "@electron-forge/publisher-github",
+      config: {
+        repository: {
+          owner: "roc",
+          name: "nts-desky",
+        },
+        prerelease: true,
+      },
+    },
+  ],
   plugins: [
     new WebpackPlugin({
       mainConfig,
