@@ -38,7 +38,7 @@ const NowPlaying = ({
   handlePlaying: (id: string, now: Now) => void;
 }) => {
   console.log("playing in nowplaying", playing);
-  const [volume, setVolume] = useState(60);
+  const [volume, setVolume] = useState(80);
   const { now, title } = playing;
 
   useEffect(() => {
@@ -66,29 +66,21 @@ const NowPlaying = ({
         isPlaying={playing.loading === false}
         paused={playing.paused}
       />
-      <div>
-        <Marquee className="w-full">
-          <h1 className="scilla-narrow-italic text-3xl mt-3">
-            <DecodedHtml>
-              Now Playing: {now.broadcast_title} on {title}
-            </DecodedHtml>
-          </h1>
-          <MarqueeSpacer spaces={5} />
-        </Marquee>
-      </div>
-      <div
-        className="volumeControls"
-        style={{
-          display: "block",
-          height: "100%",
-        }}
-      >
-        <label htmlFor="volume" style={{ color: "white" }}>
-          <em>i am volume</em>
+
+      <Marquee className="w-full">
+        <h1 className="scilla-narrow-italic text-3xl mt-3">
+          <DecodedHtml>
+            Now Playing: {now.broadcast_title} on {title}
+          </DecodedHtml>
+        </h1>
+        <MarqueeSpacer spaces={5} />
+      </Marquee>
+
+      <div className="w-20 text-center">
+        <label htmlFor="volume">
+          <em>volume</em>
           <input
-            style={{
-              fontSize: "1.5rem",
-            }}
+            className="w-20"
             name="volume"
             type="range"
             min={0}

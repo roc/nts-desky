@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PlayControl from "./PlayControl";
 import type { Now } from "./Schedule";
 import DecodedHtml from "./DecodedHtml";
@@ -29,10 +29,13 @@ const Channel = ({
   const [timeLeft, setTimeLeft] = useState(fromnow(endTimestamp));
 
   // check for time remaining every 30 seconds
-  setInterval(() => {
-    setTimeLeft(fromnow(endTimestamp));
-    console.log("timeLeft", timeLeft);
-  }, 30000);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTimeLeft(fromnow(endTimestamp));
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <FixedWidthContainer
