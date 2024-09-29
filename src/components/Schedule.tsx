@@ -45,7 +45,7 @@ const Schedule: React.FC = () => {
     asyncCallback: async () => {
       axios
         .request<ServerData>({
-          url: `https://www.nts.live/api/v2/live`,
+          url: `https://www.nts.live/api/v2/live?v=${new Date().getTime()}`,
         })
         .then(
           (response) => {
@@ -53,6 +53,12 @@ const Schedule: React.FC = () => {
             // `response` is of type `AxiosResponse<ServerData>`
             const { headers, data } = response; // `data` is of type ServerData, correctly inferred
 
+            console.log(
+              'Number(headers["content-length"])',
+              Number(headers["content-length"]),
+              "broadcastReference",
+              broadcastReference
+            );
             setIsLoaded(true);
             // if the results are different, update the channels
             if (Number(headers["content-length"]) !== broadcastReference) {
@@ -63,7 +69,12 @@ const Schedule: React.FC = () => {
                 const now = data.results.find(
                   (result) => result.channel_name === playing
                 )?.now;
-                setPlaying({ ...playing, loading: false, now });
+
+                setPlaying({
+                  title: now.broadcast_title,
+                  loading: false,
+                  now,
+                });
               }
             }
           },
