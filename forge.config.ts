@@ -16,16 +16,21 @@ const config: ForgeConfig = {
   makers: [
     new MakerZIP({}),
     new MakerRpm({}),
-    {
-      name: "@electron-forge/maker-squirrel",
-      config: {
-        // authors: "roc",
-        icon: "./images/icon.ico",
-        exe: "nts-desky.exe",
-        name: "nts-desky",
-        // exe: `${BUILD_NAME}.exe`,
-      },
-    },
+    // TODO: find out why squirrel errors with
+    // --------
+    // ---> (Inner Exception #0) System.Exception: Application could not be started, or no application associated with the specified file.
+    // ShellExecuteEx failed: File not found.
+    // --------
+    // {
+    //   name: "@electron-forge/maker-squirrel",
+    //   config: {
+    //     // authors: "roc",
+    //     icon: "./images/icon.ico",
+    //     exe: "nts-desky.exe",
+    //     name: "nts-desky",
+    //     // exe: `${BUILD_NAME}.exe`,
+    //   },
+    // },
     {
       name: "@electron-forge/maker-deb",
       config: {
