@@ -68,7 +68,7 @@ const NowPlaying = ({
       />
 
       <Marquee className="w-full">
-        <h1 className="scilla-narrow-italic text-3xl mt-3">
+        <h1 className="scilla-narrow-italic text-3xl">
           <DecodedHtml>
             Now Playing: {now.broadcast_title} on {title}
           </DecodedHtml>
