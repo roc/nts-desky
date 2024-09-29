@@ -7,7 +7,7 @@ const TitleHeading = ({ version }: { version: string }) => {
       <span className="scilla-regular smallen">k</span>
       {"    "}
       <span className="scilla-regular smallen">
-        {version} <span className="smallen">💖</span>
+        {version} <span className="smallen animate-pulse">💖</span>
       </span>
     </h1>
   );

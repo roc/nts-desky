@@ -1,7 +1,5 @@
 import type { ForgeConfig } from "@electron-forge/shared-types";
-import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
-import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
 import { WebpackPlugin } from "@electron-forge/plugin-webpack";
 
@@ -16,10 +14,35 @@ const config: ForgeConfig = {
   },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({}),
-    new MakerZIP({}, ["darwin"]),
+    new MakerZIP({}),
     new MakerRpm({}),
-    new MakerDeb({}),
+    {
+      name: "@electron-forge/maker-squirrel",
+      config: {
+        // authors: "roc",
+        icon: "./images/icon.ico",
+        exe: "nts-desky.exe",
+        name: "nts-desky",
+        // exe: `${BUILD_NAME}.exe`,
+      },
+    },
+    {
+      name: "@electron-forge/maker-deb",
+      config: {
+        options: {
+          bin: "nts-desky",
+          maintainer: "roc",
+          homepage: "https://github.com/roc/nts-desky",
+        },
+      },
+    },
+    {
+      name: "@electron-forge/maker-dmg",
+      config: {
+        format: "ULFO",
+        icon: "./images/icon.icns",
+      },
+    },
   ],
   publishers: [
     {
