@@ -1,7 +1,7 @@
 {
   "name": "nts-desky",
   "productName": "nts-desky",
-  "version": "0.0.3",
+  "version": "0.0.31",
   "repository": "https://github.com/roc/nts-desky",
   "description": "bootleg nts desktop application for the heads",
   "main": ".webpack/main",
