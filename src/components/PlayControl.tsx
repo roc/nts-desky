@@ -16,10 +16,12 @@ const PlayControl = ({
 }) => {
   const playIcon = isPlaying ? (paused ? "▶️" : "⏸") : "▶️";
   return (
-    <div className={clsx("text-3xl w-8 mx-2 mr-3", className)}>
+    <div className={clsx("text-4xl mx-2 w-8", className)}>
       {isLoading && (
         <>
-          <span className="inline-block animate-pulse animate-spin">꩜</span>
+          <span className="text-3xl inline-block animate-pulse animate-spin">
+            ꩜
+          </span>
         </>
       )}
       {!isLoading && (
