@@ -90,7 +90,7 @@ const Schedule: React.FC = () => {
     },
     // leaving dependencies empty seeing as we're only interested in the two channels for now and not browsing etc
 
-    interval: 20000, // check every 20 seconds
+    interval: 60000, // check every 60 seconds
   });
 
   if (error) {
